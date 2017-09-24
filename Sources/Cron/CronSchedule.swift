@@ -1,7 +1,8 @@
 import Foundation
 
 // TODO: Extract this to use is calendars, recurring events, etc
-// TODO: Add convenience method
+// TODO: Rename: DateSchedule, RecurringSchedule
+// TODO: Generator/Stream of scheduled days.
 
 public struct CronSchedule {
     public let components: DateComponents
@@ -55,6 +56,8 @@ public struct CronSchedule {
             nextComponents.hour = hour
         }
 
+        // TODO: check other components
+        
         return calendar.date(from: nextComponents)
     }
     
