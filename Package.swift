@@ -1,3 +1,16 @@
+// swift-tools-version:3.1
+
+import PackageDescription
+
+let package = Package(
+    name: "Cron",
+    targets: [
+        Target(name: "Cron", dependencies: [])
+    ],
+    dependencies: []
+)
+
+/*
 // swift-tools-version:4.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
@@ -26,3 +39,4 @@ let package = Package(
             dependencies: ["Cron"]),
     ]
 )
+*/

@@ -37,12 +37,13 @@ public class Cron {
         while _isRunning {
             let nowDate = Date()
 
+            print("tick \(nowDate)")
+            
             for job in jobs {
-                if let runDate = job.schedule.nextDate {
-                    if runDate < nowDate {
-                        dispatchQueue.async {
-                            job.run()
-                        }
+                print(".... \(job.runDate)")
+                if job.runDate < nowDate {
+                    dispatchQueue.async {
+                        job.run()
                     }
                 }
             }
