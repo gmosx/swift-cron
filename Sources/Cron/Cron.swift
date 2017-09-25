@@ -1,11 +1,21 @@
 import Foundation
 import Dispatch
 
+// TODO: align timer to 0 seconds.
+
 let tickInterval = 60.0
 
 struct CronItem {
     let pattern: DatePattern
     let job: Job
+}
+
+struct FunctionJob: Job {
+    let fn: () -> Void
+    
+    func run() {
+        fn()
+    }
 }
 
 public class Cron {
@@ -23,7 +33,8 @@ public class Cron {
         items.append(CronItem(pattern: pattern, job: job))
     }
 
-    public func schedule(pattern: DatePattern, jobClosure: () -> Void) {
+    public func schedule(pattern: DatePattern, fn: @escaping () -> Void) {
+        items.append(CronItem(pattern: pattern, job: FunctionJob(fn: fn)))
     }
 
     public func start() {
@@ -45,23 +56,14 @@ public class Cron {
 
             print("tick \(nowDate)")
             
-//            for job in jobs {
-//                print(".... \(job.runDate)")
-//                if job.runDate < nowDate {
-//                    dispatchQueue.async {
-//                        job.run()
-//                    }
-//                }
-//            }
+            for item in items {
+                if item.pattern.isMatching(nowDate) {
+                    item.job.run()
+                }
+            }
             
             Thread.sleep(forTimeInterval: tickInterval)
         }
     }
 }
 
-/*
- let cron = Cron()
- cron.append(CronJob(CronSchedule(minute: 5, second: 0), () => { print("tick") }))
- cron.append(CronJob(CronSchedule(minute: 60, second: 0), () => { print("tick") }))
- cron.start()
- */

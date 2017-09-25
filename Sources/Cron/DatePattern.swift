@@ -1,6 +1,8 @@
 import Foundation
 
-// calendar.date(matching: datePattern, after: now)
+// TODO: Extract this to use is calendars, recurring events, etc
+// TODO: Generator/Stream of scheduled days.
+// TODO: calendar.date(matching: datePattern, after: now)
 
 struct DCPattern {
     public enum Constraint {
