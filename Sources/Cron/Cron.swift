@@ -1,26 +1,26 @@
 import Foundation
 import Dispatch
 
-// TODO: management of jobs array should be external?
-
 let tickInterval = 60.0
 
+struct CronItem {
+    let pattern: DatePattern
+    let job: Job
+}
+
 public class Cron {
-    var jobs: [CronJob]
+    var items: [CronItem]
     let dispatchQueue: DispatchQueue
     var _isRunning: Bool
     
     public init() {
-        jobs = []
+        items = []
         dispatchQueue = DispatchQueue(label: "cronQueue", attributes: .concurrent)
         _isRunning = false
     }
     
-    public func append(job: CronJob) {
-        jobs.append(job)
-    }
-    
     public func schedule(pattern: DatePattern, job: Job) {
+        items.append(CronItem(pattern: pattern, job: job))
     }
 
     public func schedule(pattern: DatePattern, jobClosure: () -> Void) {
@@ -45,14 +45,14 @@ public class Cron {
 
             print("tick \(nowDate)")
             
-            for job in jobs {
-                print(".... \(job.runDate)")
-                if job.runDate < nowDate {
-                    dispatchQueue.async {
-                        job.run()
-                    }
-                }
-            }
+//            for job in jobs {
+//                print(".... \(job.runDate)")
+//                if job.runDate < nowDate {
+//                    dispatchQueue.async {
+//                        job.run()
+//                    }
+//                }
+//            }
             
             Thread.sleep(forTimeInterval: tickInterval)
         }

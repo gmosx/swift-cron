@@ -77,6 +77,35 @@ class DatePatternTests: XCTestCase {
         XCTAssertEqual(components.hour, 9)
     }
 
+    func testIsMatchingAt() {
+        var datePattern: DatePattern
+
+        datePattern = DatePattern("* *")!
+        XCTAssertTrue(datePattern.isMatching(startDate))
+
+        datePattern = DatePattern("20 *")!
+        XCTAssertTrue(datePattern.isMatching(startDate))
+
+        datePattern = DatePattern("20 8")!
+        XCTAssertTrue(datePattern.isMatching(startDate))
+
+        datePattern = DatePattern("25 8")!
+        XCTAssertFalse(datePattern.isMatching(startDate))
+    }
+
+    func testIsMatchingEvery() {
+        var datePattern: DatePattern
+        
+        datePattern = DatePattern("*/20 *")!
+        XCTAssertTrue(datePattern.isMatching(startDate))
+
+        datePattern = DatePattern("*/5 *")!
+        XCTAssertTrue(datePattern.isMatching(startDate))
+
+        datePattern = DatePattern("*/3 *")!
+        XCTAssertFalse(datePattern.isMatching(startDate))
+    }
+
     //    func testPerformanceExample() {
     //        // This is an example of a performance test case.
     //        self.measure {

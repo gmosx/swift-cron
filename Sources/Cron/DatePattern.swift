@@ -1,9 +1,6 @@
 import Foundation
 
-// maybe match/validate can come from next? match: next == current
 // calendar.date(matching: datePattern, after: now)
-
-// TODO: use failable init instead of throwing!
 
 struct DCPattern {
     public enum Constraint {
@@ -11,12 +8,22 @@ struct DCPattern {
         case every
     }
 
-    public let constraint: Constraint
-    public let value: Int
+    let constraint: Constraint
+    let value: Int
 
-    public init(constraint: Constraint = .at, value: Int) {
+    init(constraint: Constraint = .at, value: Int) {
         self.constraint = constraint
         self.value = value
+    }
+    
+    func isMatching(_ other: Int) -> Bool {
+        switch constraint {
+        case .at:
+            return other == value
+            
+        case .every:
+            return (other % value) == 0
+        }
     }
 }
 
@@ -54,10 +61,18 @@ public struct DatePattern {
         }
     }
 
-    public func isMatching(with date: Date) -> Bool {
-        // TODO: implement me
-        // TODO: needs a better name!
-        return false
+    public func isMatching(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        
+        var components = calendar.dateComponents(
+            [.hour, .minute],
+            from: date
+        )
+
+        return (
+            (minutePattern?.isMatching(components.minute!) ?? true) &&
+            (hourPattern?.isMatching(components.hour!) ?? true)
+        )
     }
 
     public func date(after startDate: Date) -> Date? {
