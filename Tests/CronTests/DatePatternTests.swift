@@ -1,0 +1,91 @@
+import XCTest
+@testable import Cron
+
+let calendar = Calendar.current
+let tz = TimeZone.current
+var startDate: Date = Date()
+
+class DatePatternTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        dateFormatter.timeZone = tz
+        startDate = dateFormatter.date(from: "2013-02-09 08:20:00")!
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    func testMinuteAtConstraint() {
+        var datePattern: DatePattern
+        var nextDate: Date
+        var components: DateComponents
+
+        datePattern = DatePattern("3 *")!
+        nextDate = datePattern.date(after: startDate)!
+        components = calendar.dateComponents(in: tz, from: nextDate)
+
+        XCTAssertEqual(components.minute, 3)
+    }
+
+    func testHourAtConstraint() {
+        var datePattern: DatePattern
+        var nextDate: Date
+        var components: DateComponents
+
+        datePattern = DatePattern("6 15")!
+        nextDate = datePattern.date(after: startDate)!
+        components = calendar.dateComponents(in: tz, from: nextDate)
+
+        XCTAssertEqual(components.minute, 6)
+        XCTAssertEqual(components.hour, 15)
+    }
+
+    func testMinuteEveryConstraint() {
+        var datePattern: DatePattern
+        var nextDate: Date
+        var components: DateComponents
+        
+        datePattern = DatePattern("*/3 *")!
+
+        nextDate = datePattern.date(after: startDate)!
+        components = calendar.dateComponents(in: tz, from: nextDate)
+
+        XCTAssertEqual(components.minute, 21)
+        XCTAssertEqual(components.hour, 8)
+
+        nextDate = datePattern.date(after: nextDate)!
+        components = calendar.dateComponents(in: tz, from: nextDate)
+        
+        XCTAssertEqual(components.minute, 24)
+
+        datePattern = DatePattern("*/30 *")!
+
+        nextDate = datePattern.date(after: startDate)!
+        components = calendar.dateComponents(in: tz, from: nextDate)
+        
+        XCTAssertEqual(components.minute, 30)
+        XCTAssertEqual(components.hour, 8)
+
+        nextDate = datePattern.date(after: nextDate)!
+        components = calendar.dateComponents(in: tz, from: nextDate)
+        
+        XCTAssertEqual(components.minute, 0)
+        XCTAssertEqual(components.hour, 9)
+    }
+
+    //    func testPerformanceExample() {
+    //        // This is an example of a performance test case.
+    //        self.measure {
+    //            // Put the code you want to measure the time of here.
+    //        }
+    //    }
+    
+//    static var allTests = [
+//        ("testMinuteAtConstraint", testMinuteAtConstraint),
+//    ]
+}
+

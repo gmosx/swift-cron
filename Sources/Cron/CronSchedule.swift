@@ -1,9 +1,14 @@
+// TODO: Deprecate this!
+
 import Foundation
 
 // TODO: Extract this to use is calendars, recurring events, etc
-// TODO: Rename: DateSchedule, RecurringSchedule
+// TODO: Rename: CronPattern, DatePattern, DateSchedule, RecurringSchedule
 // TODO: Generator/Stream of scheduled days.
 
+/// Examples
+/// - every minute: (second: 0)
+/// - every hour: (minute: 0)
 public struct CronSchedule {
     public let components: DateComponents
     
@@ -27,6 +32,8 @@ public struct CronSchedule {
         )
     }
     
+    /// Returns the next date that matches this pattern, starting from the
+    /// given date.
     public func nextDate(startingFrom startDate: Date) -> Date? {
         let calendar = Calendar.current
         

@@ -20,6 +20,12 @@ public class Cron {
         jobs.append(job)
     }
     
+    public func schedule(pattern: DatePattern, job: Job) {
+    }
+
+    public func schedule(pattern: DatePattern, jobClosure: () -> Void) {
+    }
+
     public func start() {
         _isRunning = true
         run()
@@ -54,10 +60,8 @@ public class Cron {
 }
 
 /*
- 
  let cron = Cron()
  cron.append(CronJob(CronSchedule(minute: 5, second: 0), () => { print("tick") }))
  cron.append(CronJob(CronSchedule(minute: 60, second: 0), () => { print("tick") }))
  cron.start()
- 
  */

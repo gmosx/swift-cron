@@ -1,6 +1,11 @@
 import Foundation
 
-public class CronJob {
+public protocol Job {
+    func run()
+}
+
+// TODO: make this a base class? Job, ScheduledJob
+public class CronJob: Job {
     let work: () -> Void
     let schedule: CronSchedule
     var _runDate: Date!
