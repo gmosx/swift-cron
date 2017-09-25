@@ -3,6 +3,7 @@ import Foundation
 // TODO: Extract this to use is calendars, recurring events, etc
 // TODO: Generator/Stream of scheduled days.
 // TODO: calendar.date(matching: datePattern, after: now)
+// TODO: add some predefined patterns, e.g. DatePattern.everyDay, DatePattern.everyHour, etc
 
 struct DCPattern {
     public enum Constraint {

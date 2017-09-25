@@ -28,13 +28,21 @@ public class Cron {
         dispatchQueue = DispatchQueue(label: "cronQueue", attributes: .concurrent)
         _isRunning = false
     }
-    
+
     public func schedule(pattern: DatePattern, job: Job) {
         items.append(CronItem(pattern: pattern, job: job))
     }
 
+    public func schedule(pattern: String, job: Job) {
+        schedule(pattern: DatePattern(pattern)!, job: job)
+    }
+
     public func schedule(pattern: DatePattern, fn: @escaping () -> Void) {
         items.append(CronItem(pattern: pattern, job: FunctionJob(fn: fn)))
+    }
+
+    public func schedule(pattern: String, fn: @escaping () -> Void) {
+        schedule(pattern: DatePattern(pattern)!, fn: fn)
     }
 
     public func start() {
