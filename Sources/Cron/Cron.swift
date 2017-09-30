@@ -1,5 +1,6 @@
 import Foundation
 import Dispatch
+import LoggerAPI
 
 // TODO: align timer to 0 seconds.
 
@@ -12,7 +13,7 @@ struct CronItem {
 
 struct FunctionJob: Job {
     let fn: () -> Void
-    
+
     func run() {
         fn()
     }
@@ -22,7 +23,7 @@ public class Cron {
     var items: [CronItem]
     let dispatchQueue: DispatchQueue
     var _isRunning: Bool
-    
+
     public init() {
         items = []
         dispatchQueue = DispatchQueue(label: "cronQueue", attributes: .concurrent)
@@ -49,29 +50,28 @@ public class Cron {
         _isRunning = true
         run()
     }
-    
+
     public func stop() {
         _isRunning = false
     }
-    
+
     public var isRunning: Bool {
         return _isRunning
     }
-    
+
     public func run() {
         while _isRunning {
             let nowDate = Date()
 
-            print("tick \(nowDate)")
-            
+            Log.verbose("Cron tick")
+
             for item in items {
                 if item.pattern.isMatching(nowDate) {
                     item.job.run()
                 }
             }
-            
+
             Thread.sleep(forTimeInterval: tickInterval)
         }
     }
 }
-
