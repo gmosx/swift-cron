@@ -4,6 +4,7 @@ import XCTest
 let calendar = Calendar.current
 let tz = TimeZone.current
 var startDate: Date = Date()
+var anotherDate: Date = Date()
 
 class DatePatternTests: XCTestCase {
     override func setUp() {
@@ -13,6 +14,7 @@ class DatePatternTests: XCTestCase {
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         dateFormatter.timeZone = tz
         startDate = dateFormatter.date(from: "2013-02-09 08:20:00")!
+        anotherDate = dateFormatter.date(from: "2013-02-09 09:00:00")!
     }
     
     override func tearDown() {
@@ -89,8 +91,8 @@ class DatePatternTests: XCTestCase {
         datePattern = DatePattern("20 8")!
         XCTAssertTrue(datePattern.isMatching(startDate))
 
-        datePattern = DatePattern("25 8")!
-        XCTAssertFalse(datePattern.isMatching(startDate))
+        datePattern = DatePattern("0 9")!
+        XCTAssertTrue(datePattern.isMatching(anotherDate))
     }
 
     func testIsMatchingEvery() {

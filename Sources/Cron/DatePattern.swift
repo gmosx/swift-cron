@@ -4,6 +4,7 @@ import Foundation
 // TODO: Generator/Stream of scheduled days.
 // TODO: calendar.date(matching: datePattern, after: now)
 // TODO: add some predefined patterns, e.g. DatePattern.everyDay, DatePattern.everyHour, etc
+// TODO: support multiple values, e.g. "5,10,15 *" or "*/10,15 *"
 
 struct DCPattern {
     public enum Constraint {
