@@ -106,6 +106,12 @@ class DatePatternTests: XCTestCase {
 
         datePattern = DatePattern("*/3 *")!
         XCTAssertFalse(datePattern.isMatching(startDate))
+
+        datePattern = DatePattern("* */8")!
+        XCTAssertTrue(datePattern.isMatching(startDate))
+
+        datePattern = DatePattern("20 */8")!
+        XCTAssertTrue(datePattern.isMatching(startDate))
     }
 
     //    func testPerformanceExample() {
