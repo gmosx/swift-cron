@@ -65,7 +65,7 @@ public struct DatePattern {
         }
     }
 
-    public func isMatching(_ date: Date) -> Bool {
+    public func isMatching(_ date: Date, calendar: Calendar = Calendar.current) -> Bool {
         let calendar = Calendar.current
         
         var components = calendar.dateComponents(
@@ -79,8 +79,8 @@ public struct DatePattern {
         )
     }
 
-    public func date(after startDate: Date) -> Date? {
-        let calendar = Calendar.current
+    public func date(after startDate: Date, calendar: Calendar = Calendar.current) -> Date? {
+//        let calendar = Calendar.current
 
         var components = calendar.dateComponents(
             [.year, .month, .day, .hour, .minute, .second, .weekday],

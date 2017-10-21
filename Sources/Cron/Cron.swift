@@ -21,11 +21,13 @@ struct FunctionJob: Job {
 
 public class Cron {
     var items: [CronItem]
+    let calendar: Calendar
     let dispatchQueue: DispatchQueue
     var _isRunning: Bool
 
-    public init() {
+    public init(calendar: Calendar = Calendar.current) {
         items = []
+        self.calendar = calendar
         dispatchQueue = DispatchQueue(label: "cronQueue", attributes: .concurrent)
         _isRunning = false
     }
@@ -67,7 +69,7 @@ public class Cron {
                 let nowDate = Date()
 
                 for item in self.items {
-                    if item.pattern.isMatching(nowDate) {
+                    if item.pattern.isMatching(nowDate, calendar: self.calendar) {
                         item.job.run()
                     }
                 }
