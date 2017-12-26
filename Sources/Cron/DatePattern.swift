@@ -1,6 +1,6 @@
 import Foundation
 
-// TODO: Extract this to use is calendars, recurring events, etc
+// TODO: Extract this to use in calendars, recurring events, etc
 // TODO: Generator/Stream of scheduled days.
 // TODO: calendar.date(matching: datePattern, after: now)
 // TODO: add some predefined patterns, e.g. DatePattern.everyDay, DatePattern.everyHour, etc
@@ -19,12 +19,12 @@ struct DCPattern {
         self.constraint = constraint
         self.value = value
     }
-    
+
     func isMatching(_ other: Int) -> Bool {
         switch constraint {
         case .at:
             return other == value
-            
+
         case .every:
             return (other % value) == 0
         }
@@ -66,8 +66,6 @@ public struct DatePattern {
     }
 
     public func isMatching(_ date: Date, calendar: Calendar = Calendar.current) -> Bool {
-        let calendar = Calendar.current
-        
         var components = calendar.dateComponents(
             [.hour, .minute],
             from: date
@@ -80,8 +78,6 @@ public struct DatePattern {
     }
 
     public func date(after startDate: Date, calendar: Calendar = Calendar.current) -> Date? {
-//        let calendar = Calendar.current
-
         var components = calendar.dateComponents(
             [.year, .month, .day, .hour, .minute, .second, .weekday],
             from: startDate
@@ -119,7 +115,7 @@ public struct DatePattern {
             if value < components.hour! {
                 components.hour! += 1
             }
-            
+
             components.hour = value
         }
 
