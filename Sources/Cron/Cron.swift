@@ -1,15 +1,12 @@
 import Foundation
 import Dispatch
 import LoggerAPI
+import Common
 
+// TODO: similar to Almanac
 // TODO: align timer to 0 seconds.
 
 let tickInterval = 60.0
-
-struct CronItem {
-    let pattern: DatePattern
-    let job: Job
-}
 
 struct FunctionJob: Job {
     let fn: () -> Void
@@ -19,6 +16,7 @@ struct FunctionJob: Job {
     }
 }
 
+// TODO: implement Collection
 public class Cron {
     var items: [CronItem]
     let calendar: Calendar
@@ -31,6 +29,8 @@ public class Cron {
         dispatchQueue = DispatchQueue(label: "cronQueue", attributes: .concurrent)
         _isRunning = false
     }
+
+    // TODO: insert
 
     public func schedule(pattern: DatePattern, job: Job) {
         items.append(CronItem(pattern: pattern, job: job))

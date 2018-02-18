@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Common",
+        "repositoryURL": "https://github.com/reizu/Swift-Common.git",
+        "state": {
+          "branch": null,
+          "revision": "5f33ad890cb4faab4104f7d6ee04e9546a35d797",
+          "version": "0.1.0"
+        }
+      },
+      {
         "package": "LoggerAPI",
         "repositoryURL": "https://github.com/IBM-Swift/LoggerAPI.git",
         "state": {
