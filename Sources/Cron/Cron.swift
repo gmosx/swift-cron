@@ -37,7 +37,7 @@ public class Cron {
     }
 
     public func schedule(pattern: String, job: Job) {
-        schedule(pattern: DatePattern(pattern)!, job: job)
+        schedule(pattern: CronPattern(pattern)!, job: job)
     }
 
     public func schedule(pattern: DatePattern, fn: @escaping () -> Void) {
@@ -45,7 +45,7 @@ public class Cron {
     }
 
     public func schedule(pattern: String, fn: @escaping () -> Void) {
-        schedule(pattern: DatePattern(pattern)!, fn: fn)
+        schedule(pattern: CronPattern(pattern)!, fn: fn)
     }
 
     public func start() {
