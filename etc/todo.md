@@ -1,1 +1,0 @@
-* Consider renaming to `Chrono`

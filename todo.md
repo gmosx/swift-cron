@@ -1,3 +1,4 @@
+* Considere renaming to Chrono?
 * Introduce SequenceJob and ParalelJob
   - consider introducing bash-style operators like &, |
 * Set the timezone for the Cron agent
