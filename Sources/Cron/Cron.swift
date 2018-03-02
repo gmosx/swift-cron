@@ -32,7 +32,7 @@ public class Cron {
 
     // TODO: insert
 
-    public func schedule(pattern: DatePattern, job: Job) {
+    public func schedule(pattern: CronPattern, job: Job) {
         items.append(CronItem(pattern: pattern, job: job))
     }
 
@@ -40,7 +40,7 @@ public class Cron {
         schedule(pattern: CronPattern(pattern)!, job: job)
     }
 
-    public func schedule(pattern: DatePattern, fn: @escaping () -> Void) {
+    public func schedule(pattern: CronPattern, fn: @escaping () -> Void) {
         items.append(CronItem(pattern: pattern, job: FunctionJob(fn: fn)))
     }
 

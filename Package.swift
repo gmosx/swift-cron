@@ -9,7 +9,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/IBM-Swift/LoggerAPI.git", from: "1.0.0"),
-        .package(url: "https://github.com/reizu/Swift-Common.git", from: "0.0.0"),
+        .package(url: "https://github.com/reizu/swift-common.git", .branch("master")),
     ],
     targets: [
         .target(

@@ -1,7 +1,6 @@
 import Foundation
 import Common
 
-// TODO: consider moving back to Cron package.
 // TODO: add some predefined patterns, e.g. DatePattern.everyDay, DatePattern.everyHour, etc
 // TODO: support multiple values, e.g. "5,10,15 *" or "*/10,15 *"
 // * * 25 12 *
@@ -75,7 +74,7 @@ public struct CronPattern: DatePattern {
         )
     }
 
-    public func date(after startDate: Date, calendar: Calendar = Calendar.current) -> Date? {
+    public func nextDate(after startDate: Date, calendar: Calendar = Calendar.current) -> Date? {
         var components = calendar.dateComponents(
             [.year, .month, .day, .hour, .minute, .second, .weekday],
             from: startDate

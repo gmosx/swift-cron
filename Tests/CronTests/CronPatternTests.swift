@@ -6,7 +6,7 @@ let tz = TimeZone.current
 var startDate: Date = Date()
 var anotherDate: Date = Date()
 
-class DatePatternTests: XCTestCase {
+class CronPatternTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
@@ -22,24 +22,24 @@ class DatePatternTests: XCTestCase {
     }
     
     func testMinuteAtConstraint() {
-        var datePattern: DatePattern
+        var datePattern: CronPattern
         var nextDate: Date
         var components: DateComponents
 
-        datePattern = DatePattern("3 *")!
-        nextDate = datePattern.date(after: startDate)!
+        datePattern = CronPattern("3 *")!
+        nextDate = datePattern.nextDate(after: startDate)!
         components = calendar.dateComponents(in: tz, from: nextDate)
 
         XCTAssertEqual(components.minute, 3)
     }
 
     func testHourAtConstraint() {
-        var datePattern: DatePattern
+        var datePattern: CronPattern
         var nextDate: Date
         var components: DateComponents
 
-        datePattern = DatePattern("6 15")!
-        nextDate = datePattern.date(after: startDate)!
+        datePattern = CronPattern("6 15")!
+        nextDate = datePattern.nextDate(after: startDate)!
         components = calendar.dateComponents(in: tz, from: nextDate)
 
         XCTAssertEqual(components.minute, 6)
@@ -47,32 +47,32 @@ class DatePatternTests: XCTestCase {
     }
 
     func testMinuteEveryConstraint() {
-        var datePattern: DatePattern
+        var datePattern: CronPattern
         var nextDate: Date
         var components: DateComponents
         
-        datePattern = DatePattern("*/3 *")!
+        datePattern = CronPattern("*/3 *")!
 
-        nextDate = datePattern.date(after: startDate)!
+        nextDate = datePattern.nextDate(after: startDate)!
         components = calendar.dateComponents(in: tz, from: nextDate)
 
         XCTAssertEqual(components.minute, 21)
         XCTAssertEqual(components.hour, 8)
 
-        nextDate = datePattern.date(after: nextDate)!
+        nextDate = datePattern.nextDate(after: nextDate)!
         components = calendar.dateComponents(in: tz, from: nextDate)
         
         XCTAssertEqual(components.minute, 24)
 
-        datePattern = DatePattern("*/30 *")!
+        datePattern = CronPattern("*/30 *")!
 
-        nextDate = datePattern.date(after: startDate)!
+        nextDate = datePattern.nextDate(after: startDate)!
         components = calendar.dateComponents(in: tz, from: nextDate)
         
         XCTAssertEqual(components.minute, 30)
         XCTAssertEqual(components.hour, 8)
 
-        nextDate = datePattern.date(after: nextDate)!
+        nextDate = datePattern.nextDate(after: nextDate)!
         components = calendar.dateComponents(in: tz, from: nextDate)
         
         XCTAssertEqual(components.minute, 0)
@@ -80,37 +80,37 @@ class DatePatternTests: XCTestCase {
     }
 
     func testIsMatchingAt() {
-        var datePattern: DatePattern
+        var datePattern: CronPattern
 
-        datePattern = DatePattern("* *")!
+        datePattern = CronPattern("* *")!
         XCTAssertTrue(datePattern.isMatching(startDate))
 
-        datePattern = DatePattern("20 *")!
+        datePattern = CronPattern("20 *")!
         XCTAssertTrue(datePattern.isMatching(startDate))
 
-        datePattern = DatePattern("20 8")!
+        datePattern = CronPattern("20 8")!
         XCTAssertTrue(datePattern.isMatching(startDate))
 
-        datePattern = DatePattern("0 9")!
+        datePattern = CronPattern("0 9")!
         XCTAssertTrue(datePattern.isMatching(anotherDate))
     }
 
     func testIsMatchingEvery() {
-        var datePattern: DatePattern
+        var datePattern: CronPattern
         
-        datePattern = DatePattern("*/20 *")!
+        datePattern = CronPattern("*/20 *")!
         XCTAssertTrue(datePattern.isMatching(startDate))
 
-        datePattern = DatePattern("*/5 *")!
+        datePattern = CronPattern("*/5 *")!
         XCTAssertTrue(datePattern.isMatching(startDate))
 
-        datePattern = DatePattern("*/3 *")!
+        datePattern = CronPattern("*/3 *")!
         XCTAssertFalse(datePattern.isMatching(startDate))
 
-        datePattern = DatePattern("* */8")!
+        datePattern = CronPattern("* */8")!
         XCTAssertTrue(datePattern.isMatching(startDate))
 
-        datePattern = DatePattern("20 */8")!
+        datePattern = CronPattern("20 */8")!
         XCTAssertTrue(datePattern.isMatching(startDate))
     }
 
